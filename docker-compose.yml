@@ -52,5 +52,26 @@ services:
       start_period: 5s
     networks:
       - internal
+
+  migrate:
+    image: migrate/migrate:v4.15.2
+    profiles: ["tools"]
+    volumes:
+      - ./db/migrations:/migrations
+    entrypoint:
+      [
+        "migrate",
+        "-path",
+        "/migrations",
+        "-database",
+        "${PG_DATABASE_URL}?sslmode=disable&search_path=public"
+      ]
+    command: ["up"]
+    networks:
+      - internal
+    depends_on:
+      - postgres
+    restart: on-failure
+
 volumes:
   db_data:
