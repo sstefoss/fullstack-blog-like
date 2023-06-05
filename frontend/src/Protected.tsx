@@ -1,15 +1,14 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-function Protected({
+const Protected = ({
   isSignedIn,
-  children,
 }: {
   isSignedIn: boolean;
-  children: React.ReactNode;
-}) {
+}): React.ReactElement => {
   if (!isSignedIn) {
     return <Navigate to="/" replace />;
   }
-  return children;
-}
+  return <Outlet />;
+};
+
 export default Protected;

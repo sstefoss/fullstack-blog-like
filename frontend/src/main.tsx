@@ -12,8 +12,13 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import App from "./App.tsx";
 import Layout from "./Layout.tsx";
+import Protected from "./Protected.tsx";
+import Profile from "./pages/Profile.tsx";
 
 import "./index.css";
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/Signup.tsx";
+import EmailVerification from "./pages/EmailVerification.tsx";
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_HASURA_GRAPHQL_ENDPOINT,
@@ -43,6 +48,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<App />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/email-verification" element={<EmailVerification />} />
+            <Route element={<Protected isSignedIn={false} />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
