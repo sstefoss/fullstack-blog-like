@@ -89,15 +89,16 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       DB_PORT: ${DB_PORT}
       DB_HOST: ${DB_HOST}
-      BACKEND_PORT: ${BACKEND_PORT}
+      CORE_PORT: ${CORE_PORT}
+      HASURA_GRAPHQL_ENDPOINT: ${HASURA_GRAPHQL_ENDPOINT}
     volumes:
-      - ./backend:/usr/src/app
+      - ./core:/usr/src/app
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - ${CORE_PORT}:${CORE_PORT}
     networks:
       - internal
     depends_on:
-      - db
+      - postgres
 
 networks:
   internal:
