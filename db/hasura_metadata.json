@@ -1,0 +1,175 @@
+{
+  "resource_version": 16,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "postgres",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "name": "posts",
+              "schema": "public"
+            },
+            "array_relationships": [
+              {
+                "name": "reactions",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "postId",
+                    "table": {
+                      "name": "reactions",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "title",
+                    "id",
+                    "body",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "filter": {}
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "reactions",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "post",
+                "using": {
+                  "foreign_key_constraint_on": "postId"
+                }
+              },
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "userId"
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {
+                    "userId": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "set": {
+                    "userId": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "postId",
+                    "type"
+                  ]
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "postId",
+                    "userId",
+                    "createdAt",
+                    "updatedAt",
+                    "type"
+                  ],
+                  "filter": {}
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [],
+                  "filter": {
+                    "userId": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "check": null
+                }
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {
+                    "userId": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "signup_tokens",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "users",
+              "schema": "public"
+            },
+            "array_relationships": [
+              {
+                "name": "reactions",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "userId",
+                    "table": {
+                      "name": "reactions",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "database_url": {
+              "from_env": "PG_DATABASE_URL"
+            },
+            "isolation_level": "read-committed",
+            "use_prepared_statements": false
+          }
+        }
+      }
+    ],
+    "remote_schemas": [
+      {
+        "name": "core",
+        "definition": {
+          "url": "http://core:4000",
+          "timeout_seconds": 60,
+          "customization": {}
+        },
+        "comment": ""
+      }
+    ]
+  }
+}
