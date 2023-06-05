@@ -90,5 +90,9 @@ services:
     networks:
       - internal
 
+networks:
+  internal:
+    driver: bridge
+
 volumes:
   blog_data:
