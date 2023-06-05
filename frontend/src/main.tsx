@@ -11,7 +11,7 @@ import {
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import App from "./App.tsx";
-import Layout from "./layout.tsx";
+import Layout from "./Layout.tsx";
 
 import "./index.css";
 
