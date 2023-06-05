@@ -14,7 +14,7 @@ const Login = () => {
     login({ variables: { email, password } });
   };
 
-  if (data.login) {
+  if (data?.login) {
     localStorage.setItem("token", data.login.token);
     return <Navigate to="/" />;
   }
