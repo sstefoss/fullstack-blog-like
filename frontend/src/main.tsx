@@ -15,11 +15,12 @@ import "./index.css";
 import Layout from "./Layout.tsx";
 import Protected from "./Protected.tsx";
 
-import Profile from "./pages/Profile.tsx";
-import Home from "./pages/Home.tsx";
-import Login from "./pages/Login.tsx";
-import Signup from "./pages/Signup.tsx";
-import EmailVerification from "./pages/EmailVerification.tsx";
+import HomePage from "./pages/Home.tsx";
+import ProfilePage from "./pages/Profile.tsx";
+import LoginPage from "./pages/Login.tsx";
+import SignupPage from "./pages/Signup.tsx";
+import EmailVerificationPage from "./pages/EmailVerification.tsx";
+import PostPage from "./pages/Post.tsx";
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_HASURA_GRAPHQL_ENDPOINT,
@@ -48,12 +49,16 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/email-verification" element={<EmailVerification />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/posts/:id" element={<PostPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route
+              path="/email-verification"
+              element={<EmailVerificationPage />}
+            />
             <Route element={<Protected isSignedIn={false} />}>
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
           </Route>
         </Routes>
