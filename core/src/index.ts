@@ -31,6 +31,7 @@ const typeDefs = `#graphql
 
   type TokenPayload {
     token: String
+    email: String
   }
 `;
 
