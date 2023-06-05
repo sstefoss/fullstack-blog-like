@@ -20,7 +20,6 @@ import ProfilePage from "./pages/Profile.tsx";
 import LoginPage from "./pages/Login.tsx";
 import SignupPage from "./pages/Signup.tsx";
 import EmailVerificationPage from "./pages/EmailVerification.tsx";
-import PostPage from "./pages/Post.tsx";
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_HASURA_GRAPHQL_ENDPOINT,
@@ -50,7 +49,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/posts/:id" element={<PostPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route
