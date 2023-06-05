@@ -1,6 +1,8 @@
 import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";
 import { Tooltip } from "react-tooltip";
 import { PostInterface } from "../interfaces.tsx";
+import { isLoggedIn } from "../utils.tsx";
+import cn from "classnames";
 
 const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
   const like = (e) => {
@@ -10,6 +12,7 @@ const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
   const dislike = (e) => {
     e.stopPropagation();
   };
+
   return (
     <div key={id} className="mb-4">
       <div className="flex block items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -24,17 +27,27 @@ const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
             <div
               className="flex items-center"
               data-tooltip-id="auth-warning"
-              data-tooltip-content="Reactions are disabled for non-logged-in users."
+              data-tooltip-content={
+                !isLoggedIn()
+                  ? "Reactions are disabled for non-logged-in users."
+                  : ""
+              }
             >
               <ThumbUpIcon
                 onClick={like}
-                className="h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-green-600 hover:cursor-not-allowed mr-2"
+                className={cn(
+                  "h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-green-600 mr-2",
+                  {
+                    "hover:cursor-not-allowed": !isLoggedIn(),
+                    "hover:cursor-pointer": isLoggedIn(),
+                  }
+                )}
               />
               <ThumbDownIcon
                 onClick={dislike}
                 className="h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-red-600 hover:cursor-pointer"
               />
-              <Tooltip id="auth-warning" />
+              {!isLoggedIn() && <Tooltip id="auth-warning" />}
             </div>
           </div>
         </div>
