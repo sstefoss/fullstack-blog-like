@@ -3,9 +3,11 @@ import { HomeIcon } from "@heroicons/react/solid";
 
 const Layout = () => {
   return (
-    <div className="bg-gray-900">
+    <div>
       <div className="flex fixed top-0 w-full px-6 py-4 justify-between bg-gray-900 border-b border-gray-700">
-        <HomeIcon className="h-6 w-6 text-gray-400 hover:text-gray-200 hover:cursor-pointer" />
+        <Link to="/">
+          <HomeIcon className="h-6 w-6 text-gray-400 hover:text-gray-200 hover:cursor-pointer" />
+        </Link>
         <div>
           {[
             { to: "/signup", label: "Signup" },
@@ -15,9 +17,7 @@ const Layout = () => {
           ))}
         </div>
       </div>
-      <div className="pt-28">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };

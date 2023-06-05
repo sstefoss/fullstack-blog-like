@@ -11,7 +11,7 @@ const HomePage = () => {
   if (error) return <p>Error : {error.message}</p>;
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-28">
       {data.posts.map((p: PostInterface) => (
         <Post post={p} />
       ))}
