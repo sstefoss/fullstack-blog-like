@@ -10,12 +10,13 @@ import {
 } from "@apollo/client";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import App from "./App.tsx";
+import "./index.css";
+
 import Layout from "./Layout.tsx";
 import Protected from "./Protected.tsx";
-import Profile from "./pages/Profile.tsx";
 
-import "./index.css";
+import Profile from "./pages/Profile.tsx";
+import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import EmailVerification from "./pages/EmailVerification.tsx";
@@ -47,7 +48,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<App />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/email-verification" element={<EmailVerification />} />

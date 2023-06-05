@@ -1,4 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
+import { PostInterface } from "../interfaces.tsx";
+
+import Post from "../components/Post.tsx";
 
 const GET_POSTS = gql`
   query GetPosts {
@@ -10,16 +13,12 @@ const GET_POSTS = gql`
   }
 `;
 
-const App = () => {
+const Home = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
-  console.log(data, error, loading);
+
   if (loading) return <div>Loading</div>;
   if (error) return <p>Error : {error.message}</p>;
-  return data.posts.map(({ id, title, body }) => (
-    <div key={id} className="mb-4">
-      <h3 className="font-bold">{title}</h3>
-      <p>{body}</p>
-    </div>
-  ));
+
+  return data.posts.map((p: PostInterface) => <Post post={p} />);
 };
-export default App;
+export default Home;
