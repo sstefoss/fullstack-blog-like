@@ -8,8 +8,10 @@ import {
   concat,
   ApolloProvider,
 } from "@apollo/client";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import App from "./App.tsx";
+import Layout from "./layout.tsx";
 
 import "./index.css";
 
@@ -37,7 +39,13 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<App />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>
 );
