@@ -9,7 +9,6 @@ const EmailVerificationPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(searchParams);
     const email = searchParams.get("email");
     const token = searchParams.get("token");
     verifyEmail({ variables: { email, token } });

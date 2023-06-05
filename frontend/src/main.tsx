@@ -18,6 +18,7 @@ import Protected from "./Protected.tsx";
 import HomePage from "./pages/Home.tsx";
 import ProfilePage from "./pages/Profile.tsx";
 import LoginPage from "./pages/Login.tsx";
+import LogoutPage from "./pages/Logout.tsx";
 import SignupPage from "./pages/Signup.tsx";
 import EmailVerificationPage from "./pages/EmailVerification.tsx";
 
@@ -50,6 +51,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route
               path="/email-verification"
