@@ -2,9 +2,12 @@ import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
 
 import { SIGNUP } from "../gql/user";
-import AuthForm from "../components/AuthForm.tsx";
+import AuthForm, {
+  AuthFormHeader,
+  AuthFormSubmit,
+} from "../components/AuthForm.tsx";
 
-const Signup = () => {
+const SignupPage = () => {
   const [signup, { error, data }] = useMutation(SIGNUP);
 
   const onSubmit = (e: any) => {
@@ -28,13 +31,17 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-        <h3 className="text-2xl font-bold text-center">Sign Up</h3>
-        <AuthForm onSubmit={onSubmit} error={error} />
+    <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <AuthForm
+          onSubmit={onSubmit}
+          error={error}
+          header={<AuthFormHeader>Sign up in our platform</AuthFormHeader>}
+          submit={<AuthFormSubmit>Login</AuthFormSubmit>}
+        />
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default SignupPage;

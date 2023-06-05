@@ -1,10 +1,13 @@
 import { useMutation } from "@apollo/client";
-import { Navigate } from "react-router-dom";
-import AuthForm from "../components/AuthForm.tsx";
+import { Link, Navigate } from "react-router-dom";
+import AuthForm, {
+  AuthFormHeader,
+  AuthFormSubmit,
+} from "../components/AuthForm.tsx";
 
 import { LOGIN } from "../gql/user";
 
-const Login = () => {
+const LoginPage = () => {
   const [login, { error, data }] = useMutation(LOGIN);
 
   const onSubmit = (e: any) => {
@@ -20,13 +23,26 @@ const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-        <h3 className="text-2xl font-bold text-center">Login</h3>
-        <AuthForm onSubmit={onSubmit} error={error} />
+    <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <AuthForm
+          onSubmit={onSubmit}
+          error={error}
+          header={<AuthFormHeader>Sign in to our platform</AuthFormHeader>}
+          submit={<AuthFormSubmit>Login</AuthFormSubmit>}
+        />
+        <div className="text-sm font-medium mt-4 text-gray-500 dark:text-gray-300">
+          Not registered?{" "}
+          <Link
+            to="/signup"
+            className="text-blue-700 hover:underline dark:text-blue-500"
+          >
+            Create account
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;
