@@ -21,4 +21,4 @@ migrate-force: ## Force migration version e.g `make migrate-force version=migrat
 	docker-compose -f ${DOCKER_COMPOSE_FILE} --profile tools run --rm migrate force $(version)
 
 shell-db: ## Enter to database console
-	docker-compose -f ${DOCKER_COMPOSE_FILE} exec db psql -U postgres -d vodadb
+	docker-compose -f ${DOCKER_COMPOSE_FILE} exec db psql -U postgres -d postgres

@@ -4,9 +4,11 @@ services:
     image: postgres:15
     restart: always
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - blog_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - internal
 
   graphql-engine:
     image: hasura/graphql-engine:v2.26.0
@@ -89,4 +91,4 @@ services:
       - internal
 
 volumes:
-  db_data:
+  blog_data:
