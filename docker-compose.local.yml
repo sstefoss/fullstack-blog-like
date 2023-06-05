@@ -21,7 +21,8 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" 
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+      # HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}
     networks:
       - internal
     depends_on:
@@ -99,6 +100,25 @@ services:
       - internal
     depends_on:
       - postgres
+
+  frontend:
+    container_name: frontend
+    stdin_open: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      VITE_HASURA_GRAPHQL_ENDPOINT: ${HASURA_GRAPHQL_ENDPOINT}
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    volumes:
+      - "/app/node_modules"
+      - "./frontend:/app"
+    networks:
+      - internal
+    depends_on:
+      - core
 
 networks:
   internal:
