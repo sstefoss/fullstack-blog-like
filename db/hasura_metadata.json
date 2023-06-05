@@ -1,5 +1,5 @@
 {
-  "resource_version": 16,
+  "resource_version": 3,
   "metadata": {
     "version": 3,
     "sources": [
@@ -27,6 +27,19 @@
               }
             ],
             "select_permissions": [
+              {
+                "role": "anonymous",
+                "permission": {
+                  "columns": [
+                    "title",
+                    "id",
+                    "body",
+                    "createdAt",
+                    "updatedAt"
+                  ],
+                  "filter": {}
+                }
+              },
               {
                 "role": "user",
                 "permission": {
