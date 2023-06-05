@@ -11,7 +11,7 @@ export const LIST_POSTS = gql`
 `;
 
 export const FETCH_POST = gql`
-  query Post($id: Int!) { {
+  query Post($id: Int!) {
     posts(where: { id: { _eq: $id } }) {
       ...post
     }
