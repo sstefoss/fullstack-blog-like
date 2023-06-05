@@ -77,6 +77,28 @@ services:
     networks:
       - internal
 
+  core:
+    container_name: core
+    build:
+      context: ./core
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${DB_HOST}
+      BACKEND_PORT: ${BACKEND_PORT}
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    networks:
+      - internal
+    depends_on:
+      - db
+
 networks:
   internal:
     driver: bridge
