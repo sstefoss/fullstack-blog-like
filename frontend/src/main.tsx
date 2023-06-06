@@ -7,6 +7,7 @@ import {
   InMemoryCache,
   concat,
   ApolloProvider,
+  defaultDataIdFromObject,
 } from "@apollo/client";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
@@ -49,7 +50,16 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 });
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      posts: {
+        keyFields: ["id"],
+      },
+      reactions: {
+        keyFields: ["postId", "userId"],
+      },
+    },
+  }),
   link: concat(authMiddleware, httpLink),
 });
 

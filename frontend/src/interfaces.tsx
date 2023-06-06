@@ -1,10 +1,10 @@
 export interface IUser {
-  id: string;
+  id: number;
   email: string;
 }
 
 export interface IPost {
-  id: string;
+  id: number;
   title: string;
   body: string;
 }

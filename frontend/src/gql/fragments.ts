@@ -17,6 +17,8 @@ export const POST_FRAGMENT = gql`
 
 export const REACTION_FRAGMENT = gql`
   fragment reaction on reactions {
+    postId
+    userId
     type
   }
 `;

@@ -21,9 +21,31 @@ const Post = ({
   reactions: IReaction[];
 }) => {
   const { loggedIn } = useContext(AuthContext);
-  const [upsertReaction, upsertResp] = useMutation(UPSERT_REACTION);
-  const [deleteReaction, deleteResp] = useMutation(DELETE_REACTION);
-  const reaction = reactions.length > 0 ? reactions[0] : null;
+  const [upsertReaction] = useMutation(UPSERT_REACTION, {
+    update: (cache, d) => {
+      cache.modify({
+        id: cache.identify({ id, __typename: "posts" }),
+        fields: {
+          reactions() {
+            return [d.data.insert_reactions_one];
+          },
+        },
+      });
+    },
+  });
+  const [deleteReaction] = useMutation(DELETE_REACTION, {
+    update: (cache) => {
+      cache.modify({
+        id: cache.identify({ id, __typename: "posts" }),
+        fields: {
+          reactions() {
+            return [];
+          },
+        },
+      });
+    },
+  });
+  const reaction = reactions?.length > 0 ? reactions[0] : null;
 
   const react = (type: REACTION_TYPE) => {
     if (!loggedIn) {
