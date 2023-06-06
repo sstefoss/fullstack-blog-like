@@ -1,4 +1,3 @@
-import StickyBox from "react-sticky-box";
 import { useQuery, useMutation } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
@@ -128,7 +127,7 @@ const Profile = () => {
           <Post key={r.post.id} post={r.post} reactions={r.post.reactions} />
         ))}
       </div>
-      <StickyBox offsetTop={100} offsetBottom={20}>
+      <div className="sticky top-[112px] self-start">
         <Card className="w-[22rem]">
           <SearchBar onSearch={(text) => searchPosts(text)} />
           <Dropdown
@@ -164,7 +163,7 @@ const Profile = () => {
             </Button>
           </div>
         </Card>
-      </StickyBox>
+      </div>
     </div>
   );
 };
