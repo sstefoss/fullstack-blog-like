@@ -15,7 +15,7 @@ const Dropdown = ({ options, className, icon }: DDProps) => {
   return (
     <div className={cn("my-4 relative", className)}>
       <button
-        className="text-gray-200 w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-4 py-3 flex justify-center items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="text-gray-200 w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-4 py-3 flex justify-center items-center font-semibold dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         onClick={() => setOpen(!open)}
       >
         <div className="flex flex-1 items-center">
