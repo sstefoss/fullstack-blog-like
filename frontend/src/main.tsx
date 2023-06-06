@@ -50,16 +50,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 });
 
 const client = new ApolloClient({
-  cache: new InMemoryCache({
-    typePolicies: {
-      posts: {
-        keyFields: ["id"],
-      },
-      reactions: {
-        keyFields: ["postId", "userId"],
-      },
-    },
-  }),
+  cache: new InMemoryCache(),
   link: concat(authMiddleware, httpLink),
 });
 

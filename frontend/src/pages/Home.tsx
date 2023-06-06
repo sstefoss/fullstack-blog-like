@@ -1,15 +1,12 @@
+import { useContext } from "react";
 import { useQuery } from "@apollo/client";
-import { IPost, IReaction } from "../interfaces.tsx";
-import { LIST_POSTS, LIST_POSTS_W_REACTIONS } from "../gql/post.ts";
+import { IPostWithReactions } from "../interfaces.tsx";
 
 import Post from "../components/Post.tsx";
-import { useContext } from "react";
-import { AuthContext } from "../context/auth.tsx";
 import Loading from "../components/Loading.tsx";
 
-interface IPostWithReactions extends IPost {
-  reactions: IReaction[];
-}
+import { LIST_POSTS, LIST_POSTS_W_REACTIONS } from "../gql/post.ts";
+import { AuthContext } from "../context/auth.tsx";
 
 const HomePage = () => {
   const { loggedIn } = useContext(AuthContext);

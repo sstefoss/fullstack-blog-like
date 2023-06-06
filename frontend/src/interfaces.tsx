@@ -12,3 +12,7 @@ export interface IPost {
 export interface IReaction {
   type: string;
 }
+
+export interface IPostWithReactions extends IPost {
+  reactions: IReaction[];
+}
