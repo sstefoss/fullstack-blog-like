@@ -5,6 +5,7 @@ import { LIST_POSTS, LIST_POSTS_W_REACTIONS } from "../gql/post.ts";
 import Post from "../components/Post.tsx";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.tsx";
+import Loading from "../components/Loading.tsx";
 
 interface IPostWithReactions extends IPost {
   reactions: IReaction[];
@@ -20,6 +21,7 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center mt-28">
+      {loading && <Loading />}
       {data.posts.map((p: IPostWithReactions) => (
         <Post key={p.id} post={p} reactions={p.reactions} />
       ))}
