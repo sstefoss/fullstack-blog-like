@@ -65,7 +65,7 @@ const resolvers = {
       dbInsertSignupToken(email, token);
 
       if (!token) throw new Error('Something went wrong :(');
-      return { token };
+      return { token, email };
     },
     verifyEmail: async (_: any, data: { email: string; token: string }) => {
       const { email, token } = data;
@@ -82,7 +82,7 @@ const resolvers = {
         throw new Error('User email not found.');
       }
       const jwtToken = signJWT(userId, 'user');
-      return { token: jwtToken };
+      return { token: jwtToken, email };
     },
     login: async (_: any, data: { email: string; password: string }) => {
       const { email, password } = data;
@@ -95,7 +95,7 @@ const resolvers = {
         throw new Error('password_invalid');
       }
       const token = signJWT(user.id, 'user');
-      return { token };
+      return { token, email };
     },
   },
 };
