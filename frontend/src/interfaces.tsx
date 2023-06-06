@@ -1,10 +1,14 @@
-export interface UserInterface {
+export interface IUser {
   id: string;
   email: string;
 }
 
-export interface PostInterface {
+export interface IPost {
   id: string;
   title: string;
   body: string;
+}
+
+export interface IReaction {
+  type: string;
 }
