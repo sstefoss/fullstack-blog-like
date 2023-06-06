@@ -1,18 +1,50 @@
 import { useContext } from "react";
 import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";
-import { Tooltip } from "react-tooltip";
-import { PostInterface } from "../interfaces.tsx";
-import { AuthContext } from "../context/auth.tsx";
+import { useMutation } from "@apollo/client";
 import cn from "classnames";
 
-const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
-  const { loggedIn } = useContext(AuthContext);
-  const like = (e) => {
-    e.stopPropagation();
-  };
+import { Tooltip } from "react-tooltip";
+import { IPost, IReaction } from "../interfaces.tsx";
+import { AuthContext } from "../context/auth.tsx";
+import { UPSERT_REACTION, DELETE_REACTION } from "../gql/reaction.ts";
 
-  const dislike = (e) => {
-    e.stopPropagation();
+enum REACTION_TYPE {
+  LIKE = "LIKE",
+  DISLIKE = "DISLIKE",
+}
+
+const Post = ({
+  post: { id, title, body },
+  reactions,
+}: {
+  post: IPost;
+  reactions: IReaction[];
+}) => {
+  const { loggedIn } = useContext(AuthContext);
+  const [upsertReaction, upsertResp] = useMutation(UPSERT_REACTION);
+  const [deleteReaction, deleteResp] = useMutation(DELETE_REACTION);
+  const reaction = reactions.length > 0 ? reactions[0] : null;
+
+  const react = (type: REACTION_TYPE) => {
+    if (!loggedIn) {
+      return;
+    }
+
+    // check if reaction should be removed
+    if (reaction?.type == type) {
+      return deleteReaction({
+        variables: {
+          postId: id,
+        },
+      });
+    }
+
+    return upsertReaction({
+      variables: {
+        postId: id,
+        type,
+      },
+    });
   };
 
   return (
@@ -36,18 +68,26 @@ const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
               }
             >
               <ThumbUpIcon
-                onClick={like}
+                onClick={() => react(REACTION_TYPE.LIKE)}
                 className={cn(
                   "h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-green-600 mr-2",
                   {
                     "hover:cursor-not-allowed": !loggedIn,
                     "hover:cursor-pointer": loggedIn,
+                    "text-green-600": reaction?.type == REACTION_TYPE.LIKE,
                   }
                 )}
               />
               <ThumbDownIcon
-                onClick={dislike}
-                className="h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-red-600 hover:cursor-pointer"
+                onClick={() => react(REACTION_TYPE.DISLIKE)}
+                className={cn(
+                  "h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-red-600",
+                  {
+                    "hover:cursor-not-allowed": !loggedIn,
+                    "hover:cursor-pointer": loggedIn,
+                    "text-red-600": reaction?.type == REACTION_TYPE.DISLIKE,
+                  }
+                )}
               />
               {!loggedIn && <Tooltip id="auth-warning" />}
             </div>
