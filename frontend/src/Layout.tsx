@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { HomeIcon } from "@heroicons/react/solid";
-import { isLoggedIn } from "./utils";
+import { AuthContext } from "./context/auth";
 
 const Layout = () => {
-  const links = isLoggedIn()
+  const { loggedIn } = useContext(AuthContext);
+  const links = loggedIn
     ? [
         { to: "/profile", label: "Profile" },
         { to: "/logout", label: "Logout" },

@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { VERIFY_EMAIL } from "../gql/user";
+import { AuthContext } from "../context/auth.tsx";
 
 const EmailVerificationPage = () => {
+  const authContext = useContext(AuthContext);
   const [verifyEmail, { error, data }] = useMutation(VERIFY_EMAIL);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const EmailVerificationPage = () => {
   }
 
   if (data?.verifyEmail) {
-    localStorage.setItem("token", data.verifyEmail.token);
+    authContext.login?.(data.verifyEmail.token);
     setTimeout(() => {
       navigate("/");
     }, 3000);

@@ -1,24 +1,28 @@
+import { useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { Link, Navigate } from "react-router-dom";
 import AuthForm, {
   AuthFormHeader,
   AuthFormSubmit,
 } from "../components/AuthForm.tsx";
+import { AuthContext } from "../context/auth.tsx";
 
 import { LOGIN } from "../gql/user";
 
 const LoginPage = () => {
+  const authContext = useContext(AuthContext);
   const [login, { error, data }] = useMutation(LOGIN);
 
   const onSubmit = (e: any) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
-    login({ variables: { email, password } });
+    login({ variables: { email, password } }).then((res) => {
+      authContext.login?.(res.data.login.token);
+    });
   };
 
   if (data?.login) {
-    localStorage.setItem("token", data.login.token);
     return <Navigate to="/" />;
   }
 

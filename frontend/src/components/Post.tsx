@@ -1,10 +1,12 @@
+import { useContext } from "react";
 import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";
 import { Tooltip } from "react-tooltip";
 import { PostInterface } from "../interfaces.tsx";
-import { isLoggedIn } from "../utils.tsx";
+import { AuthContext } from "../context/auth.tsx";
 import cn from "classnames";
 
 const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
+  const { loggedIn } = useContext(AuthContext);
   const like = (e) => {
     e.stopPropagation();
   };
@@ -28,7 +30,7 @@ const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
               className="flex items-center"
               data-tooltip-id="auth-warning"
               data-tooltip-content={
-                !isLoggedIn()
+                !loggedIn
                   ? "Reactions are disabled for non-logged-in users."
                   : ""
               }
@@ -38,8 +40,8 @@ const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
                 className={cn(
                   "h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-green-600 mr-2",
                   {
-                    "hover:cursor-not-allowed": !isLoggedIn(),
-                    "hover:cursor-pointer": isLoggedIn(),
+                    "hover:cursor-not-allowed": !loggedIn,
+                    "hover:cursor-pointer": loggedIn,
                   }
                 )}
               />
@@ -47,7 +49,7 @@ const Post = ({ post: { id, title, body } }: { post: PostInterface }) => {
                 onClick={dislike}
                 className="h-6 w-6 text-gray-400 hover:text-gray-200 hover:text-red-600 hover:cursor-pointer"
               />
-              {!isLoggedIn() && <Tooltip id="auth-warning" />}
+              {!loggedIn && <Tooltip id="auth-warning" />}
             </div>
           </div>
         </div>
