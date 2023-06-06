@@ -17,8 +17,20 @@ enum SHOW_TYPE {
   DISLIKED = "DISLIKED",
 }
 
+enum REACTION_TYPE {
+  LIKE = "LIKE",
+  DISLIKE = "DISLIKE",
+}
+
 const Profile = () => {
   const { loading, error, data } = useQuery(MY_POSTS);
+  const setReactionToPosts = (reaction: REACTION_TYPE) => {
+    console.log("set reaction: ", reaction);
+  };
+
+  const searchPosts = (text: string) => {
+    console.log("search posts", text);
+  };
 
   if (loading) return <div>Loading</div>;
   if (error) return <p>Error : {error.message}</p>;
@@ -39,7 +51,7 @@ const Profile = () => {
       </div>
       <StickyBox offsetTop={100} offsetBottom={20}>
         <Card className="w-[22rem]">
-          <SearchBar />
+          <SearchBar onSearch={(text) => searchPosts(text)} />
           <Dropdown
             className="w-full"
             icon={<EyeIcon className="h-4 w-4 text-gray-400 mr-3" />}
@@ -53,13 +65,19 @@ const Profile = () => {
             ]}
           />
           <div className="w-full flex">
-            <Button className="dark:bg-green-400 dark:hover:bg-green-600 mr-4 flex-1">
+            <Button
+              className="dark:bg-green-400 dark:hover:bg-green-600 mr-4 flex-1"
+              onClick={() => setReactionToPosts(REACTION_TYPE.LIKE)}
+            >
               <div className="flex items-center">
                 <ThumbUpIcon className="h-4 w-4 text-gray-100 hover:text-gray-200 hover:text-green-600 mr-2" />
                 <span>Like all</span>
               </div>
             </Button>
-            <Button className="dark:bg-red-400 dark:hover:bg-red-600 flex-1">
+            <Button
+              className="dark:bg-red-400 dark:hover:bg-red-600 flex-1"
+              onClick={() => setReactionToPosts(REACTION_TYPE.DISLIKE)}
+            >
               <div className="flex items-center">
                 <ThumbDownIcon className="h-4 w-4 text-gray-100 mr-2" />
                 <span>Dislike all</span>
