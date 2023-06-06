@@ -144,16 +144,16 @@ const Profile = () => {
           />
           <div className="w-full flex">
             <Button
-              className="dark:bg-green-400 dark:hover:bg-green-600 mr-4 flex-1"
+              className="dark:border-green-800 dark:border dark:border-2 dark:hover:bg-green-800 mr-4 flex-1"
               onClick={() => setReactionToPosts(REACTION_TYPE.LIKE)}
             >
               <div className="flex items-center">
-                <ThumbUpIcon className="h-4 w-4 text-gray-100 hover:text-gray-200 hover:text-green-600 mr-2" />
+                <ThumbUpIcon className="h-4 w-4 text-gray-100 mr-2" />
                 <span>Like all</span>
               </div>
             </Button>
             <Button
-              className="dark:bg-red-400 dark:hover:bg-red-600 flex-1"
+              className="dark:border-red-900 dark:hover:bg-red-900 dark:border dark:border-2 flex-1"
               onClick={() => setReactionToPosts(REACTION_TYPE.DISLIKE)}
             >
               <div className="flex items-center">
