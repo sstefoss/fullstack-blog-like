@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { POST_FRAGMENT } from "./fragments";
+import { REACTION_FRAGMENT, POST_FRAGMENT } from "./fragments";
 
 export const LIST_POSTS = gql`
   query Posts {
@@ -10,11 +10,15 @@ export const LIST_POSTS = gql`
   ${POST_FRAGMENT}
 `;
 
-export const FETCH_POST = gql`
-  query Post($id: Int!) {
-    posts(where: { id: { _eq: $id } }) {
+export const LIST_POSTS_W_REACTIONS = gql`
+  query Posts {
+    posts {
       ...post
+      reactions {
+        ...reaction
+      }
     }
   }
   ${POST_FRAGMENT}
+  ${REACTION_FRAGMENT}
 `;
