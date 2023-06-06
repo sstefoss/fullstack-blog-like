@@ -1,11 +1,10 @@
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "./context/auth";
 
-const Protected = ({
-  isSignedIn,
-}: {
-  isSignedIn: boolean;
-}): React.ReactElement => {
-  if (!isSignedIn) {
+const Protected = (): React.ReactElement => {
+  const { loggedIn } = useContext(AuthContext);
+  if (!loggedIn) {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

@@ -68,7 +68,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 path="/email-verification"
                 element={<EmailVerificationPage />}
               />
-              <Route element={<Protected isSignedIn={false} />}>
+              <Route element={<Protected />}>
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Route>
