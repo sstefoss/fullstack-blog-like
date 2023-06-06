@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { REACTION_FRAGMENT, POST_FRAGMENT, USER_FRAGMENT } from "./fragments";
 
 export const ME = gql`
-  query Me {
+  query me {
     me {
       User {
         ...user
@@ -13,10 +13,10 @@ export const ME = gql`
 `;
 
 export const MY_POSTS = gql`
-  query {
+  query myPosts($where: reactions_bool_exp) {
     me {
       User {
-        reactions {
+        reactions(where: $where) {
           post {
             ...post
             reactions {

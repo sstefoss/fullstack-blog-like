@@ -1,5 +1,6 @@
 import StickyBox from "react-sticky-box";
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 
 import { MY_POSTS } from "../gql/user.ts";
@@ -22,8 +23,25 @@ enum REACTION_TYPE {
   DISLIKE = "DISLIKE",
 }
 
+const ALL_LIKED = {
+  type: {
+    _eq: "LIKE",
+  },
+};
+
+const ALL_DISLIKED = {
+  type: {
+    _eq: "DISLIKE",
+  },
+};
+
 const Profile = () => {
-  const { loading, error, data } = useQuery(MY_POSTS);
+  const [where, setWhere] = useState({});
+  const { loading, error, data } = useQuery(MY_POSTS, {
+    variables: {
+      where,
+    },
+  });
   const setReactionToPosts = (reaction: REACTION_TYPE) => {
     console.log("set reaction: ", reaction);
   };
@@ -36,7 +54,17 @@ const Profile = () => {
   if (error) return <p>Error : {error.message}</p>;
 
   const show = (type: SHOW_TYPE) => {
-    console.log(type);
+    switch (type) {
+      case SHOW_TYPE.ALL:
+        setWhere({});
+        break;
+      case SHOW_TYPE.LIKED:
+        setWhere(ALL_LIKED);
+        break;
+      case SHOW_TYPE.DISLIKED:
+        setWhere(ALL_DISLIKED);
+        break;
+    }
   };
 
   const reactions = data?.me?.User?.reactions;
