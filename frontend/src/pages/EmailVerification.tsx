@@ -13,15 +13,16 @@ const EmailVerificationPage = () => {
   useEffect(() => {
     const email = searchParams.get("email");
     const token = searchParams.get("token");
-    verifyEmail({ variables: { email, token } });
-  }, [searchParams, verifyEmail]);
+    verifyEmail({ variables: { email, token } }).then((res) =>
+      authContext.login?.(res.data.verifyEmail.token)
+    );
+  }, [authContext, searchParams, verifyEmail]);
 
   if (error && error.message === "no_such_token") {
     return <div>No such token</div>;
   }
 
   if (data?.verifyEmail) {
-    authContext.login?.(data.verifyEmail.token);
     setTimeout(() => {
       navigate("/");
     }, 3000);
