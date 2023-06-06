@@ -29,14 +29,21 @@ const httpLink = new HttpLink({
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      authorization: localStorage.getItem("token")
-        ? `Bearer ${localStorage.getItem("token")}`
-        : null,
-    },
-  }));
+  operation.setContext(({ headers = {} }) => {
+    const authHeader: { authorization?: string } = {};
+    const token = localStorage.getItem("token");
+
+    if (typeof token === "string" && token.length > 0) {
+      authHeader.authorization = `Bearer ${localStorage.getItem("token")}`;
+    }
+
+    return {
+      headers: {
+        ...headers,
+        ...authHeader,
+      },
+    };
+  });
 
   return forward(operation);
 });
