@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-center mt-28">
       {data.posts.map((p: PostInterface) => (
-        <Post post={p} />
+        <Post key={p.id} post={p} />
       ))}
     </div>
   );
