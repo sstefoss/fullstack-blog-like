@@ -1,6 +1,14 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
-import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
+import {
+  CheckIcon,
+  ThumbUpIcon,
+  ThumbDownIcon,
+  DocumentSearchIcon,
+  EyeIcon,
+} from "@heroicons/react/solid";
+import { Link } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 import { MY_POSTS } from "../gql/user.ts";
 import { UPDATE_REACTIONS_MANY } from "../gql/reaction.ts";
@@ -123,6 +131,9 @@ const Profile = () => {
     <div className="flex justify-center mt-28">
       <div className="flex justify-center items-center mr-10 flex-col">
         {loading && <Loading />}
+        {reactions.length === 0 && (
+          <EmptyState searchEnabled={!isEmpty(searchWhere)} />
+        )}
         {reactions.map((r: { post: IPostWithReactions }) => (
           <Post key={r.post.id} post={r.post} reactions={r.post.reactions} />
         ))}
@@ -163,6 +174,53 @@ const Profile = () => {
             </Button>
           </div>
         </Card>
+      </div>
+    </div>
+  );
+};
+
+interface EmptyStateProps {
+  searchEnabled: boolean;
+}
+
+const EmptyState = ({ searchEnabled }: EmptyStateProps) => {
+  return (
+    <div className="min-w-[574px] flex items-center flex-col justify-center block min-w-lg p-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-gray-300">
+      {searchEnabled ? (
+        <DocumentSearchIcon className="h-16 w-16 text-gray-400 mb-4" />
+      ) : (
+        <CheckIcon className="h-16 w-16 text-gray-400 mb-4" />
+      )}
+      <div className="flex items-center flex-col justify-center ">
+        <h3 className="font-bold text-lg mb-4 text-center">
+          {searchEnabled ? (
+            <>
+              We couldn't find any posts <br /> that meet your search criteria.
+            </>
+          ) : (
+            <>
+              There are currently no liked
+              <br /> or disliked posts to show!
+            </>
+          )}
+        </h3>
+        <p className="text-center">
+          {searchEnabled ? (
+            <>
+              Try modifying the filters to find posts
+              <br /> that match your preferences.
+            </>
+          ) : (
+            <>
+              Please head over to the{" "}
+              <Link className="underline" to="/">
+                Home Page
+              </Link>
+              <br />
+              and react to new content.
+            </>
+          )}
+        </p>
       </div>
     </div>
   );
