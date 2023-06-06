@@ -61,7 +61,7 @@ interface DDOptionProps {
 const DropdownOption = ({ label, onClick }: DDOptionProps) => {
   return (
     <li onClick={onClick}>
-      <div className="block w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:cursor-pointer dark:hover:text-white">
+      <div className="block w-full px-4 py-2 font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 hover:cursor-pointer dark:hover:text-white">
         {label}
       </div>
     </li>

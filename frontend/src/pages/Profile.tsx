@@ -132,7 +132,7 @@ const Profile = () => {
           <SearchBar onSearch={(text) => searchPosts(text)} />
           <Dropdown
             className="w-full"
-            icon={<EyeIcon className="h-4 w-4 text-gray-400 mr-3" />}
+            icon={<EyeIcon className="h-4 w-4 text-gray-400 mr-2.5" />}
             options={[
               { label: "Show all", onClick: () => show(SHOW_TYPE.ALL) },
               { label: "Liked only", onClick: () => show(SHOW_TYPE.LIKED) },
