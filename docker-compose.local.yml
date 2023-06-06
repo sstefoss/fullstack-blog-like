@@ -23,6 +23,7 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"RS256", "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuW10aqSqWLDi4xVDHwtg\n4gD4c6ttkvUCPuHsnsHyOr5mFvuaP/8ado1+9JMSMOfdJqRmqoBmjrUDROrE6q4T\n6e2Qv4B5HHf3VDxMf8z9nPbIMGozVC8KRy2vU1Cxm0e+QA3PuPRAT99oyIuQeTBo\nQ6oP1KyMM3xxf1Ki3TZiskmuR3K3NcmAyE7OvIUnOrezMBYv7oEIIPhJyaxmeBi3\nirvagt+/nfF+kxnir6jKchXvlT+e5wunNPTm51uUZdVPeilQz0KoKOi5yz6jAIVe\n06prNNszm4lcCM0qXrR68EX1F8r1tOtO47f8WvjjRJp8r9yVDDKqO0yPmxIjhXrE\nAwIDAQAB\n-----END PUBLIC KEY-----"}'
     networks:
       - internal
     depends_on:
