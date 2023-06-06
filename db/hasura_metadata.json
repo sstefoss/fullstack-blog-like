@@ -1,5 +1,5 @@
 {
-  "resource_version": 9,
+  "resource_version": 11,
   "metadata": {
     "version": 3,
     "sources": [
@@ -104,7 +104,11 @@
                     "updatedAt",
                     "type"
                   ],
-                  "filter": {}
+                  "filter": {
+                    "userId": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
                 }
               }
             ],
@@ -112,7 +116,9 @@
               {
                 "role": "user",
                 "permission": {
-                  "columns": [],
+                  "columns": [
+                    "type"
+                  ],
                   "filter": {
                     "userId": {
                       "_eq": "X-Hasura-User-Id"
