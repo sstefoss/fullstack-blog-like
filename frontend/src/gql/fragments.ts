@@ -17,14 +17,6 @@ export const POST_FRAGMENT = gql`
 
 export const REACTION_FRAGMENT = gql`
   fragment reaction on reactions {
-    post {
-      ...post
-    }
-    user {
-      ...user
-    }
     type
   }
-  ${POST_FRAGMENT}
-  ${USER_FRAGMENT}
 `;
