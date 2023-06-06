@@ -159,6 +159,24 @@
                   }
                 }
               }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "createdAt",
+                    "email",
+                    "id",
+                    "updatedAt"
+                  ],
+                  "filter": {
+                    "id": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
+                }
+              }
             ]
           }
         ],
