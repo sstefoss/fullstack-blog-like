@@ -14,6 +14,8 @@ const AuthForm = ({
   const parseErrorMessage = (error: ApolloError) => {
     if (error.message === "user_exists") {
       return "User already exists";
+    } else if (error.message === "no_such_user") {
+      return "User does not exist";
     }
   };
 
