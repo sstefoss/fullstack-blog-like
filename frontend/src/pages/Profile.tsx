@@ -1,6 +1,6 @@
 import StickyBox from "react-sticky-box";
 import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 
 import { MY_POSTS } from "../gql/user.ts";
@@ -34,7 +34,7 @@ const makeTypeQuery = (type: REACTION_TYPE) => ({
     _eq: type,
   },
 });
-const makeWhereCondition = (typeWhere, searchWhere) => ({
+const makeWhereCondition = (typeWhere: any, searchWhere: any) => ({
   _and: [typeWhere, searchWhere],
 });
 
@@ -60,24 +60,27 @@ const Profile = () => {
     console.log("set reaction: ", reaction);
   };
 
+  const show = useCallback(
+    (type: SHOW_TYPE) => {
+      switch (type) {
+        case SHOW_TYPE.ALL:
+          setTypeWhere({});
+          break;
+        case SHOW_TYPE.LIKED:
+          setTypeWhere(makeTypeQuery(REACTION_TYPE.LIKE));
+          break;
+        case SHOW_TYPE.DISLIKED:
+          setTypeWhere(makeTypeQuery(REACTION_TYPE.DISLIKE));
+          break;
+      }
+    },
+    [setTypeWhere]
+  );
+
   const searchPosts = (text: string) => setSearchWhere(makeSearchQuery(text));
 
   if (loading) return <div>Loading</div>;
   if (error) return <p>Error : {error.message}</p>;
-
-  const show = (type: SHOW_TYPE) => {
-    switch (type) {
-      case SHOW_TYPE.ALL:
-        setTypeWhere({});
-        break;
-      case SHOW_TYPE.LIKED:
-        setTypeWhere(makeTypeQuery(REACTION_TYPE.LIKE));
-        break;
-      case SHOW_TYPE.DISLIKED:
-        setTypeWhere(makeTypeQuery(REACTION_TYPE.DISLIKE));
-        break;
-    }
-  };
 
   const reactions = data?.me?.User?.reactions;
 
