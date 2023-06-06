@@ -1,6 +1,6 @@
 import StickyBox from "react-sticky-box";
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 
 import { MY_POSTS } from "../gql/user.ts";
@@ -23,32 +23,44 @@ enum REACTION_TYPE {
   DISLIKE = "DISLIKE",
 }
 
-const ALL_LIKED = {
-  type: {
-    _eq: "LIKE",
+const makeSearchQuery = (text: string) => ({
+  post: {
+    _or: [{ title: { _like: `%${text}%` } }, { body: { _like: `%${text}%` } }],
   },
-};
+});
 
-const ALL_DISLIKED = {
+const makeTypeQuery = (type: REACTION_TYPE) => ({
   type: {
-    _eq: "DISLIKE",
+    _eq: type,
   },
-};
+});
+const makeWhereCondition = (typeWhere, searchWhere) => ({
+  _and: [typeWhere, searchWhere],
+});
 
 const Profile = () => {
-  const [where, setWhere] = useState({});
+  const [searchWhere, setSearchWhere] = useState({});
+  const [typeWhere, setTypeWhere] = useState({});
+
+  const [where, setWhere] = useState(
+    makeWhereCondition(searchWhere, typeWhere)
+  );
+
+  useEffect(() => {
+    setWhere(makeWhereCondition(searchWhere, typeWhere));
+  }, [searchWhere, typeWhere]);
+
   const { loading, error, data } = useQuery(MY_POSTS, {
     variables: {
       where,
     },
   });
+
   const setReactionToPosts = (reaction: REACTION_TYPE) => {
     console.log("set reaction: ", reaction);
   };
 
-  const searchPosts = (text: string) => {
-    console.log("search posts", text);
-  };
+  const searchPosts = (text: string) => setSearchWhere(makeSearchQuery(text));
 
   if (loading) return <div>Loading</div>;
   if (error) return <p>Error : {error.message}</p>;
@@ -56,13 +68,13 @@ const Profile = () => {
   const show = (type: SHOW_TYPE) => {
     switch (type) {
       case SHOW_TYPE.ALL:
-        setWhere({});
+        setTypeWhere({});
         break;
       case SHOW_TYPE.LIKED:
-        setWhere(ALL_LIKED);
+        setTypeWhere(makeTypeQuery(REACTION_TYPE.LIKE));
         break;
       case SHOW_TYPE.DISLIKED:
-        setWhere(ALL_DISLIKED);
+        setTypeWhere(makeTypeQuery(REACTION_TYPE.DISLIKE));
         break;
     }
   };
