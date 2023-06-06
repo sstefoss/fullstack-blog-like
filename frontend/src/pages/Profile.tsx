@@ -80,7 +80,7 @@ const Profile = () => {
         updates: makeBatchReactionUpdates(postIds, type),
       },
       update: (cache, { data: { update_reactions_many } }) => {
-        update_reactions_many.forEach((resp) => {
+        update_reactions_many.forEach((resp: any) => {
           // every post can only have one reaction
           const reaction = resp.returning[0];
           cache.modify({
