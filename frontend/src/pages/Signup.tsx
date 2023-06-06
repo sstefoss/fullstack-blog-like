@@ -37,7 +37,7 @@ const SignupPage = () => {
           onSubmit={onSubmit}
           error={error}
           header={<AuthFormHeader>Sign up in our platform</AuthFormHeader>}
-          submit={<AuthFormSubmit>Login</AuthFormSubmit>}
+          submit={<AuthFormSubmit>Signup</AuthFormSubmit>}
         />
       </div>
     </div>
