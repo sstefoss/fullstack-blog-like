@@ -1,5 +1,5 @@
 {
-  "resource_version": 3,
+  "resource_version": 9,
   "metadata": {
     "version": 3,
     "sources": [
@@ -182,7 +182,30 @@
           "customization": {},
           "forward_client_headers": true
         },
-        "comment": ""
+        "comment": "",
+        "remote_relationships": [
+          {
+            "relationships": [
+              {
+                "definition": {
+                  "to_source": {
+                    "field_mapping": {
+                      "userId": "id"
+                    },
+                    "relationship_type": "object",
+                    "source": "postgres",
+                    "table": {
+                      "name": "users",
+                      "schema": "public"
+                    }
+                  }
+                },
+                "name": "User"
+              }
+            ],
+            "type_name": "CurrentUser"
+          }
+        ]
       }
     ]
   }

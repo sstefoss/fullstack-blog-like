@@ -14,13 +14,12 @@ const privateKey = fs.readFileSync(path.join(path.resolve('.'), 'private.key'));
 const publicKey = fs.readFileSync(path.join(path.resolve('.'), 'public.pem'));
 
 const typeDefs = `#graphql
-  type User {
-    id: Int
-    email: String
+  type CurrentUser {
+    userId: Int
   }
 
   type Query {
-    me: User!
+    me: CurrentUser!
   }
 
   type Mutation {
@@ -40,12 +39,18 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     me: async (_: any, _args: any, ctx: any) => {
-      if (ctx.userId) {
-        const user = await dbFetchUser(ctx.userId);
-        return { ...user };
-      } else {
+      if (!ctx.userId) {
         throw new Error('Not logged in.');
       }
+
+      const user = await dbFetchUser(ctx.userId);
+      if (!user) {
+        throw new Error("Can't find user.");
+      }
+
+      return {
+        userId: user.id,
+      };
     },
   },
   Mutation: {
