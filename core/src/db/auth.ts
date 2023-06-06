@@ -2,11 +2,11 @@ import db from './index.ts';
 import { SignupToken } from '../models/signup_token.ts';
 
 export const dbVerifyEmail = async (email: string): Promise<number | null> => {
-  const userId = db('users').where({ email }).update({ emailVerified: true }, ['id']);
-  if (!userId) {
+  const users = await db('users').where({ email }).update({ emailVerified: true }, ['id']);
+  if (!users) {
     return null;
   }
-  return userId;
+  return users[0].id;
 };
 
 export const dbInsertSignupToken = async (email: string, token: string): Promise<void> => {
