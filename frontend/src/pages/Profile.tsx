@@ -1,9 +1,10 @@
 import StickyBox from "react-sticky-box";
-import { useQuery } from "@apollo/client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { useCallback, useEffect, useState } from "react";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 
 import { MY_POSTS } from "../gql/user.ts";
+import { UPDATE_REACTIONS_MANY } from "../gql/reaction.ts";
 import { IPostWithReactions } from "../interfaces.tsx";
 import Post from "../components/Post.tsx";
 import Loading from "../components/Loading.tsx";
@@ -38,6 +39,13 @@ const makeWhereCondition = (typeWhere: any, searchWhere: any) => ({
   _and: [typeWhere, searchWhere],
 });
 
+const makeBatchReactionUpdates = (postIds: number[], type: REACTION_TYPE) => {
+  return postIds.map((id) => ({
+    _set: { type },
+    where: { postId: { _eq: id } },
+  }));
+};
+
 const Profile = () => {
   const [searchWhere, setSearchWhere] = useState({});
   const [typeWhere, setTypeWhere] = useState({});
@@ -50,14 +58,42 @@ const Profile = () => {
     setWhere(makeWhereCondition(searchWhere, typeWhere));
   }, [searchWhere, typeWhere]);
 
+  const [updateReactionsMany] = useMutation(UPDATE_REACTIONS_MANY);
   const { loading, error, data } = useQuery(MY_POSTS, {
     variables: {
       where,
     },
+    fetchPolicy: "network-only",
   });
 
-  const setReactionToPosts = (reaction: REACTION_TYPE) => {
-    console.log("set reaction: ", reaction);
+  const setReactionToPosts = (type: REACTION_TYPE) => {
+    const reactions = data?.me?.User?.reactions;
+    if (!reactions) {
+      return null;
+    }
+
+    const postIds = reactions.map(
+      (r: { post: IPostWithReactions }) => r.post.id
+    );
+    updateReactionsMany({
+      variables: {
+        updates: makeBatchReactionUpdates(postIds, type),
+      },
+      update: (cache, { data: { update_reactions_many } }) => {
+        update_reactions_many.forEach((resp) => {
+          // every post can only have one reaction
+          const reaction = resp.returning[0];
+          cache.modify({
+            id: cache.identify({ id: reaction.postId, __typename: "posts" }),
+            fields: {
+              reactions() {
+                return [reaction];
+              },
+            },
+          });
+        });
+      },
+    });
   };
 
   const show = useCallback(

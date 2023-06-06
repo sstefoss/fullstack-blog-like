@@ -20,3 +20,14 @@ export const DELETE_REACTION = gql`
     }
   }
 `;
+
+export const UPDATE_REACTIONS_MANY = gql`
+  mutation update_reactions_many($updates: [reactions_updates!]!) {
+    update_reactions_many(updates: $updates) {
+      returning {
+        ...reaction
+      }
+    }
+  }
+  ${REACTION_FRAGMENT}
+`;
