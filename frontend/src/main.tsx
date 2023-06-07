@@ -7,22 +7,21 @@ import {
   InMemoryCache,
   concat,
   ApolloProvider,
-  defaultDataIdFromObject,
 } from "@apollo/client";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import "./index.css";
-import { AuthContextProvider } from "./context/auth.tsx";
+import { AuthContextProvider } from "@/context/auth.tsx";
 
-import Layout from "./Layout.tsx";
-import Protected from "./Protected.tsx";
+import Layout from "@/Layout.tsx";
+import Protected from "@/Protected.tsx";
 
-import HomePage from "./pages/Home.tsx";
-import ProfilePage from "./pages/Profile.tsx";
-import LoginPage from "./pages/Login.tsx";
-import LogoutPage from "./pages/Logout.tsx";
-import SignupPage from "./pages/Signup.tsx";
-import EmailVerificationPage from "./pages/EmailVerification.tsx";
+import HomePage from "@/pages/Home.tsx";
+import ProfilePage from "@/pages/Profile.tsx";
+import LoginPage from "@/pages/Login.tsx";
+import LogoutPage from "@/pages/Logout.tsx";
+import SignupPage from "@/pages/Signup.tsx";
+import EmailVerificationPage from "@/pages/EmailVerification.tsx";
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_HASURA_GRAPHQL_ENDPOINT,

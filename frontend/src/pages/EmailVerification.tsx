@@ -1,8 +1,8 @@
 import { useEffect, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { VERIFY_EMAIL } from "../gql/user";
-import { AuthContext } from "../context/auth.tsx";
+import { VERIFY_EMAIL } from "@/gql/user";
+import { AuthContext } from "@/context/auth.tsx";
 
 const EmailVerificationPage = () => {
   const authContext = useContext(AuthContext);

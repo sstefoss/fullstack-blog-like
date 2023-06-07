@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useQuery } from "@apollo/client";
-import { IPostWithReactions } from "../interfaces.tsx";
 
-import Post from "../components/Post.tsx";
-import Loading from "../components/Loading.tsx";
+import { IPostWithReactions } from "@/interfaces.tsx";
+import Post from "@/components/posts/Post.tsx";
+import Loading from "@/components/Loading.tsx";
 
 import { LIST_POSTS, LIST_POSTS_W_REACTIONS } from "../gql/post.ts";
 import { AuthContext } from "../context/auth.tsx";

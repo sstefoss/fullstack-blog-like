@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { debounce } from "lodash";
 import { SearchIcon } from "@heroicons/react/solid";
 
@@ -7,8 +7,6 @@ interface Props {
 }
 
 const SearchBar = ({ onSearch }: Props) => {
-  const [inputVal, setInputVal] = useState("");
-
   const debouncedFilter = useCallback(
     debounce((query) => onSearch(query), 500),
     []
@@ -16,7 +14,6 @@ const SearchBar = ({ onSearch }: Props) => {
 
   const handleChange = (e: any) => {
     const newValue = e.target.value;
-    setInputVal(newValue);
     debouncedFilter(newValue);
   };
 
@@ -27,7 +24,6 @@ const SearchBar = ({ onSearch }: Props) => {
       </div>
       <input
         type="search"
-        value={inputVal}
         onChange={handleChange}
         className="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-800 focus:border-blue-800 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:placeholder:font-semibold dark:text-white dark:focus:ring-blue-800 dark:focus:border-blue-800"
         placeholder="Search..."

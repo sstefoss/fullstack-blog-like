@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import cn from "classnames";
 
@@ -11,12 +11,6 @@ interface DDProps {
 const Dropdown = ({ options, className, icon }: DDProps) => {
   const [open, setOpen] = useState(false);
   const [activeOption, setActiveOption] = useState(options[0]);
-
-  useEffect(() => {
-    // console.log(activeOption, 'use')
-  }, []);
-
-  console.log(activeOption);
 
   return (
     <div className={cn("my-4 relative", className)}>

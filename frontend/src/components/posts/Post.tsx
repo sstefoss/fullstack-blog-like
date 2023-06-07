@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";
 import { useMutation } from "@apollo/client";
 import cn from "classnames";
-
 import { Tooltip } from "react-tooltip";
-import { IPost, IReaction } from "../interfaces.tsx";
-import { AuthContext } from "../context/auth.tsx";
-import { UPSERT_REACTION, DELETE_REACTION } from "../gql/reaction.ts";
+
+import { IPost, IReaction } from "@/interfaces.tsx";
+import { AuthContext } from "@/context/auth.tsx";
+import { UPSERT_REACTION, DELETE_REACTION } from "@/gql/reaction.ts";
 
 enum REACTION_TYPE {
   LIKE = "LIKE",

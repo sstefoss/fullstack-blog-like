@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { Link, Navigate } from "react-router-dom";
+
 import AuthForm, {
   AuthFormHeader,
   AuthFormSubmit,
-} from "../components/AuthForm.tsx";
-import { AuthContext } from "../context/auth.tsx";
-
-import { LOGIN } from "../gql/user";
+} from "@/components/AuthForm.tsx";
+import { AuthContext } from "@/context/auth.tsx";
+import { LOGIN } from "@/gql/user";
 
 const LoginPage = () => {
   const authContext = useContext(AuthContext);

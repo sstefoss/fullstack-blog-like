@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "./context/auth";
+import { AuthContext } from "@/context/auth";
 
 const Protected = (): React.ReactElement => {
   const { loggedIn } = useContext(AuthContext);

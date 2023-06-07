@@ -1,11 +1,11 @@
 import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
 
-import { SIGNUP } from "../gql/user";
+import { SIGNUP } from "@/gql/user";
 import AuthForm, {
   AuthFormHeader,
   AuthFormSubmit,
-} from "../components/AuthForm.tsx";
+} from "@/components/AuthForm.tsx";
 
 const SignupPage = () => {
   const [signup, { error, data }] = useMutation(SIGNUP);
