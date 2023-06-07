@@ -85,7 +85,7 @@ const Post = ({
               data-tooltip-id="auth-warning"
               data-tooltip-content={
                 !loggedIn
-                  ? "Reactions are disabled for non-logged-in users."
+                  ? "Reactions are disabled for non logged in users."
                   : ""
               }
             >
