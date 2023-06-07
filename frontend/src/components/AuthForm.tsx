@@ -16,6 +16,8 @@ const AuthForm = ({
       return "User already exists";
     } else if (error.message === "no_such_user") {
       return "User does not exist";
+    } else if (error.message === "password_invalid") {
+      return "Incorrect password";
     }
   };
 
