@@ -10,7 +10,7 @@ $ sh setup.sh
 
 ## Step 2: Import hasura metadata file
 
-In Hasura console, navigate to  [metadata actions](http://localhost:8080/console/settings/metadata-action)  and select __Import metadata__.
+In Hasura console, navigate to  [metadata actions](http://localhost:8080/console/settings/metadata-actions)  and select __Import metadata__.
 
 Select [hasura_metadadata.json](https://github.com/sstefoss/fullstack-blog-like/blob/master/db/hasura_metadata.json) file from inside __./db__ folder.
 
